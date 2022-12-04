@@ -1,8 +1,8 @@
-# ToDo Application with a Java API and Azure Cosmos DB API for MongoDB on Azure App Service
+# ToDo Application with a Java API and Azure Database for PostgreSQL - Flexible Server on Azure Container Apps
 
-[![Open in Remote - Containers](https://img.shields.io/static/v1?label=Remote%20-%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/azure-samples/todo-java-mongo)
+[![Open in Remote - Containers](https://img.shields.io/static/v1?label=Remote%20-%20Containers&message=Open&color=blue&logo=visualstudiocode)](https://vscode.dev/redirect?url=vscode://ms-vscode-remote.remote-containers/cloneInVolume?url=https://github.com/fangjian0423/todo-java-postgresql-aca-terraform)
 
-A complete ToDo application that includes everything you need to build, deploy, and monitor an Azure solution. This application uses the Azure Developer CLI (azd) to get you up and running on Azure quickly, React.js for the Web application, Java for the API, Azure Cosmos DB API for MongoDB for storage, and Azure Monitor for monitoring and logging. It includes application code, tools, and pipelines that serve as a foundation from which you can build upon and customize when creating your own solutions.
+A complete ToDo application that includes everything you need to build, deploy, and monitor an Azure solution. This application uses the Azure Developer CLI (azd) to get you up and running on Azure quickly, React.js for the Web application, Java for the API, Azure Database for PostgreSQL - Flexible Server for storage, and Azure Monitor for monitoring and logging. It includes application code, tools, and pipelines that serve as a foundation from which you can build upon and customize when creating your own solutions.
 
 Let's jump in and get the ToDo app up and running in Azure. When you are finished, you will have a fully functional web app deployed on Azure. In later steps, you'll see how to setup a pipeline and monitor the application.
 
@@ -17,6 +17,8 @@ The following prerequisites are required to use this application. Please ensure 
 - [Azure Developer CLI](https://aka.ms/azd-install)
 - [Java 17 or later](https://jdk.java.net/) - for API backend
 - [Node.js with npm (16.13.1+)](https://nodejs.org/) - for Web frontend
+- [Docker](https://docs.docker.com/get-docker/)
+- [Terraform](https://www.terraform.io/)
 
 ### Quickstart
 
@@ -26,7 +28,7 @@ The fastest way for you to get this application up and running on Azure is to us
 1. Run the following command to initialize the project, provision Azure resources, and deploy the application code.
 
 ```bash
-azd up --template todo-java-mongo
+azd up
 ```
 
 You will be prompted for the following information:
@@ -34,6 +36,35 @@ You will be prompted for the following information:
 - `Environment Name`: This will be used as a prefix for the resource group that will be created to hold all Azure resources. This name should be unique within your Azure subscription.
 - `Azure Location`: The Azure location where your resources will be deployed.
 - `Azure Subscription`: The Azure Subscription where your resources will be deployed.
+
+> NOTE: This may take a while to complete as it executes three commands: `azd init` (initializes environment), `azd provision` (provisions Azure resources), and `azd deploy` (deploys application code). You will see a progress indicator as it provisions and deploys your application.
+
+When `azd up` is complete it will output the following URLs:
+
+- Azure Portal link to view resources
+- ToDo Web application frontend
+- ToDo API application
+
+> NOTE: This template may only be used with the following Azure locations:
+>
+> - Australia East
+> - Brazil South
+> - Canada Central
+> - Central US
+> - East Asia
+> - East US
+> - East US 2
+> - Germany West Central
+> - Japan East
+> - Korea Central
+> - North Central US
+> - North Europe
+> - South Central US
+> - UK South
+> - West Europe
+> - West US
+>
+> If you attempt to use the template with an unsupported region, the provision step will fail.
 
 > NOTE: This may take a while to complete as it executes three commands: `azd init` (initializes environment), `azd provision` (provisions Azure resources), and `azd deploy` (deploys application code). You will see a progress indicator as it provisions and deploys your application.
 
@@ -57,10 +88,9 @@ Click the web application URL to launch the ToDo app. Create a new collection an
 
 This application utilizes the following Azure resources:
 
-- [**Azure App Services**](https://docs.microsoft.com/azure/app-service/) to host the Web frontend and API backend
-- [**Azure Cosmos DB API for MongoDB**](https://docs.microsoft.com/azure/cosmos-db/mongodb/mongodb-introduction) for storage
+- [**Azure Container Apps**](https://docs.microsoft.com/azure/container-apps/) to host the Web frontend and API backend
+- [**Azure Database for PostgreSQL - Flexible Server**](https://learn.microsoft.com/azure/postgresql/flexible-server/overview) for storage
 - [**Azure Monitor**](https://docs.microsoft.com/azure/azure-monitor/) for monitoring and logging
-- [**Azure Key Vault**](https://docs.microsoft.com/azure/key-vault/) for securing secrets
 
 Here's a high level architecture diagram that illustrates these components. Notice that these are all contained within a single [resource group](https://docs.microsoft.com/azure/azure-resource-manager/management/manage-resource-groups-portal), that will be created for you when you create the resources.
 
@@ -173,11 +203,7 @@ Sometimes, things go awry. If you happen to run into issues, then please review 
 
 ### Roles
 
-This template creates a [managed identity](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) for your app inside your Azure Active Directory tenant, and it is used to authenticate your app with Azure and other services that support Azure AD authentication like Key Vault via access policies. You will see principalId referenced in the infrastructure as code files, that refers to the id of the currently logged in Azure CLI user, which will be granted access policies and permissions to run the application locally. To view your managed identity in the Azure Portal, follow these [steps](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/how-to-view-managed-identity-service-principal-portal).
-
-### Key Vault
-
-This template uses [Azure Key Vault](https://docs.microsoft.com/azure/key-vault/general/overview) to securely store your Cosmos DB connection string for the provisioned Cosmos DB account. Key Vault is a cloud service for securely storing and accessing secrets (API keys, passwords, certificates, cryptographic keys) and makes it simple to give other Azure services access to them. As you continue developing your solution, you may add as many secrets to your Key Vault as you require.
+This template creates a [managed identity](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/overview) for your app inside your Azure Active Directory tenant, and it is used to authenticate your app with Azure and other services that support Azure AD authentication like PostgreSQL Flexible server via access policies. You will see principalId referenced in the infrastructure as code files, that refers to the id of the currently logged in Azure CLI user, which will be granted access policies and permissions to run the application locally. To view your managed identity in the Azure Portal, follow these [steps](https://docs.microsoft.com/azure/active-directory/managed-identities-azure-resources/how-to-view-managed-identity-service-principal-portal).
 
 ## Uninstall
 
