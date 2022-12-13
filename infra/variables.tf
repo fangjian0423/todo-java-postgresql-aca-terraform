@@ -15,13 +15,13 @@ variable "principal_id" {
 }
 
 variable "web_image_name" {
-  description = "The Id of the azd service principal to add to deployed keyvault access policies"
+  description = "Web App Image name"
   type        = string
   default     = "nginx:latest"
 }
 
 variable "api_image_name" {
-  description = "The Id of the azd service principal to add to deployed keyvault access policies"
+  description = "API App Image name"
   type        = string
   default     = "nginx:latest"
 }
