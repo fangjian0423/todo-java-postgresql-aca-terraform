@@ -9,8 +9,6 @@ import com.microsoft.applicationinsights.attach.ApplicationInsights;
 public class SimpleTodoApplication {
 
     public static void main(String[] args) {
-//        ApplicationInsights.attach();
-
         new SpringApplication(SimpleTodoApplication.class).run(args);
     }
 }
