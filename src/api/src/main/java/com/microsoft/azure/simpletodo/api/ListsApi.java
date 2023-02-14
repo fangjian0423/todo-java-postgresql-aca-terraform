@@ -61,12 +61,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "404", description = "Todo list not found")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/lists/{listId}/items",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
+    @PostMapping("/lists/{listId}/items")
     default ResponseEntity<TodoItem> createItem(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId,
         @Parameter(name = "TodoItem", description = "The Todo Item") @Valid @RequestBody(required = false) TodoItem todoItem
@@ -103,12 +98,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "400", description = "Invalid request schema")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.POST,
-        value = "/lists",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
+    @PostMapping("/lists")
     default ResponseEntity<TodoList> createList(
         @Parameter(name = "TodoList", description = "The Todo List") @Valid @RequestBody(required = false) TodoList todoList
     ) {
@@ -143,10 +133,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "404", description = "Todo list or item not found")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/lists/{listId}/items/{itemId}"
-    )
+    @DeleteMapping("/lists/{listId}/items/{itemId}")
     default ResponseEntity<Void> deleteItemById(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId,
         @Parameter(name = "itemId", description = "The Todo list unique identifier", required = true) @PathVariable("itemId") String itemId
@@ -172,10 +159,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "404", description = "Todo list not found")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.DELETE,
-        value = "/lists/{listId}"
-    )
+    @DeleteMapping("/lists/{listId}")
     default ResponseEntity<Void> deleteListById(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId
     ) {
@@ -203,11 +187,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "404", description = "Todo list or item not found")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/lists/{listId}/items/{itemId}",
-        produces = { "application/json" }
-    )
+    @GetMapping("/lists/{listId}/items/{itemId}")
     default ResponseEntity<TodoItem> getItemById(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId,
         @Parameter(name = "itemId", description = "The Todo list unique identifier", required = true) @PathVariable("itemId") String itemId
@@ -246,11 +226,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "404", description = "Todo list not found")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/lists/{listId}/items",
-        produces = { "application/json" }
-    )
+    @GetMapping("/lists/{listId}/items")
     default ResponseEntity<List<TodoItem>> getItemsByListId(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId,
         @Parameter(name = "top", description = "The max number of items to returns in a result") @Valid @RequestParam(value = "top", required = false) BigDecimal top,
@@ -268,6 +244,7 @@ public interface ListsApi {
         return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
 
     }
+
 
 
     /**
@@ -291,11 +268,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "404", description = "Todo list or item not found")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/lists/{listId}/items/state/{state}",
-        produces = { "application/json" }
-    )
+    @GetMapping("/lists/{listId}/items/state/{state}")
     default ResponseEntity<List<TodoItem>> getItemsByListIdAndState(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId,
         @Parameter(name = "state", description = "The Todo item state", required = true) @PathVariable("state") TodoState state,
@@ -315,7 +288,6 @@ public interface ListsApi {
 
     }
 
-
     /**
      * GET /lists/{listId} : Gets a Todo list by unique identifier
      *
@@ -334,11 +306,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "404", description = "Todo list not found")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/lists/{listId}",
-        produces = { "application/json" }
-    )
+    @GetMapping("/lists/{listId}")
     default ResponseEntity<TodoList> getListById(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId
     ) {
@@ -373,11 +341,7 @@ public interface ListsApi {
             })
         }
     )
-    @RequestMapping(
-        method = RequestMethod.GET,
-        value = "/lists",
-        produces = { "application/json" }
-    )
+    @GetMapping("/lists")
     default ResponseEntity<List<TodoList>> getLists(
         @Parameter(name = "top", description = "The max number of items to returns in a result") @Valid @RequestParam(value = "top", required = false) BigDecimal top,
         @Parameter(name = "skip", description = "The number of items to skip within the results") @Valid @RequestParam(value = "skip", required = false) BigDecimal skip
@@ -418,12 +382,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "404", description = "Todo list or item not found")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/lists/{listId}/items/{itemId}",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
+    @PutMapping("/lists/{listId}/items/{itemId}")
     default ResponseEntity<TodoItem> updateItemById(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId,
         @Parameter(name = "itemId", description = "The Todo list unique identifier", required = true) @PathVariable("itemId") String itemId,
@@ -461,11 +420,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "400", description = "Update request is invalid")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/lists/{listId}/items/state/{state}",
-        consumes = { "application/json" }
-    )
+    @PutMapping("/lists/{listId}/items/state/{state}")
     default ResponseEntity<Void> updateItemsStateByListId(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId,
         @Parameter(name = "state", description = "The Todo item state", required = true) @PathVariable("state") TodoState state,
@@ -495,12 +450,7 @@ public interface ListsApi {
             @ApiResponse(responseCode = "400", description = "Todo list is invalid")
         }
     )
-    @RequestMapping(
-        method = RequestMethod.PUT,
-        value = "/lists/{listId}",
-        produces = { "application/json" },
-        consumes = { "application/json" }
-    )
+    @PutMapping("/lists/{listId}")
     default ResponseEntity<TodoList> updateListById(
         @Parameter(name = "listId", description = "The Todo list unique identifier", required = true) @PathVariable("listId") String listId,
         @Parameter(name = "TodoList", description = "The Todo List") @Valid @RequestBody(required = false) TodoList todoList
