@@ -19,7 +19,7 @@ The following prerequisites are required to use this application. Please ensure 
 - [Node.js with npm (16.13.1+)](https://nodejs.org/) - for Web frontend
 - [Docker](https://docs.docker.com/get-docker/)
 - [Terraform](https://www.terraform.io/)
-- [PostgreSQL 12 or later](https://www.postgresql.org/) - for PostgreSQL initialization
+- [PostgreSQL 12 or later](https://www.postgresql.org/) - for PostgreSQL initialization (make sure `psql` command is available in your terminal)
 
 ### Quickstart
 

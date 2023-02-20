@@ -25,3 +25,9 @@ variable "api_image_name" {
   type        = string
   default     = "nginx:latest"
 }
+
+variable "client_id" {
+  description = "Client id of current account"
+  type        = string
+  default     = ""
+}
